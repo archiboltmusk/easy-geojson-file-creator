@@ -1,0 +1,38 @@
+{
+  "schema": "schema/ward.schema.json",
+  "file": "wards.geojson",
+  "title": "Purulia Municipality ward boundaries",
+  "municipality_name": "Purulia Municipality",
+  "municipality_type": "municipal_council",
+  "district": "Purulia",
+  "state": "West Bengal",
+  "country": "IN",
+  "crs": "EPSG:4326",
+  "feature_count": 22,
+  "expected_feature_count": 23,
+  "missing": [
+    "Ward 23"
+  ],
+  "bbox": [
+    86.344758,
+    23.308208,
+    86.391489,
+    23.346393
+  ],
+  "accuracy": "Traced from a ward map, not an official survey. Approximate; do not use for legal or electoral purposes.",
+  "source": {
+    "name": "Purulia 2040 (Kasa ward map)",
+    "url": "https://github.com/archiboltmusk/Purulia/blob/7f6ef3cdc195b5ebd6fd6ecac9ad10fabd819af8/purulia_wards.geojson",
+    "commit": "7f6ef3cdc195b5ebd6fd6ecac9ad10fabd819af8",
+    "license": "MIT",
+    "attribution": "Purulia 2040 contributors"
+  },
+  "processing": [
+    "Mapped `ward` to `ward_number` and added the schema/ward.schema.json properties; `ward_name` and `year_delimited` are null (wards are unnamed, delimitation year unknown).",
+    "Dropped tracing slivers under 100 m² (one each in wards 10 and 20), so every ward is a single Polygon.",
+    "Oriented rings per RFC 7946 (exterior counter-clockwise).",
+    "Script: scripts/normalise_purulia_wards.py"
+  ],
+  "updated": "2026-09-28",
+  "to_improve": "Replace with boundaries from Purulia Municipality or the West Bengal State Election Commission for the current delimitation, including ward 23."
+}
