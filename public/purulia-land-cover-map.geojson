@@ -1,0 +1,43 @@
+{
+  "type": "FeatureCollection",
+  "name": "Purulia Municipality Landuse and Landcover Map 2006",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Map image footprint",
+        "description": "Georeferenced extent estimated from the longitude and latitude ticks printed on the supplied map image. This is an approximate image footprint, not a digitized land-cover boundary.",
+        "map_year": 2006,
+        "source_image": "530079_1_En_5_Fig11_HTML-2.png",
+        "source_url": "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/530079_1_En_5_Fig11_HTML-2-J9UQiK70C32Uzfwb47UKCqBjFKUHb0.png",
+        "landcover_classes": [
+          "Agricultural land 2006",
+          "Barren land 2006",
+          "Vacant land 2006",
+          "Vegetation 2006",
+          "Waterbody 2006",
+          "Wetland 2006"
+        ],
+        "digitization_status": "image-footprint-only"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [86.35, 23.3416667],
+            [86.3916667, 23.3416667],
+            [86.3916667, 23.3166667],
+            [86.35, 23.3166667],
+            [86.35, 23.3416667]
+          ]
+        ]
+      }
+    }
+  ]
+}
