@@ -3,28 +3,41 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"predev": "node scripts/copy-maplibre-worker.mjs",
 		"dev": "next dev",
+		"prebuild": "node scripts/copy-maplibre-worker.mjs",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"test": "vitest run"
 	},
 	"dependencies": {
+		"@tmcw/togeojson": "^7.1.2",
 		"clsx": "^2.1.1",
+		"jszip": "^3.10.2",
 		"lucide-react": "^1.48.0",
+		"maplibre-gl": "^6.11.2",
 		"next": "^16.3.6",
+		"proj4": "^2.22.0",
 		"react": "^19.3.0",
 		"react-dom": "^19.3.0",
+		"shpjs": "^6.2.0",
 		"tailwind-merge": "^3.7.0"
 	},
 	"devDependencies": {
+		"@mapbox/shp-write": "^0.4.3",
 		"@tailwindcss/postcss": "^4.3.3",
+		"@types/geojson": "^7946.0.16",
 		"@types/node": "^26.6.3",
+		"@types/proj4": "^2.19.0",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
+		"@xmldom/xmldom": "^0.9.12",
 		"eslint": "^10.11.0",
 		"eslint-config-next": "^16.3.6",
 		"postcss": "^8.5.28",
 		"tailwindcss": "^4.3.3",
-		"typescript": "^7.0.2"
+		"typescript": "^7.0.2",
+		"vitest": "^5.0.2"
 	}
 }
