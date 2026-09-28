@@ -1,17 +1,24 @@
 {
-  "schema_version": "0.1",
-  "file": "purulia_wards.geojson",
+  "schema": "schema/ward.schema.json",
+  "file": "wards.geojson",
   "title": "Purulia Municipality ward boundaries",
-  "boundary_type": "ward",
-  "local_body": "Purulia Municipality",
+  "municipality_name": "Purulia Municipality",
+  "municipality_type": "municipal_council",
   "district": "Purulia",
   "state": "West Bengal",
   "country": "IN",
   "crs": "EPSG:4326",
   "feature_count": 22,
   "expected_feature_count": 23,
-  "missing": ["Ward 23"],
-  "bbox": [86.344758, 23.308208, 86.391489, 23.346393],
+  "missing": [
+    "Ward 23"
+  ],
+  "bbox": [
+    86.344758,
+    23.308208,
+    86.391489,
+    23.346393
+  ],
   "accuracy": "Traced from a ward map, not an official survey. Approximate; do not use for legal or electoral purposes.",
   "source": {
     "name": "Purulia 2040 (Kasa ward map)",
@@ -21,7 +28,7 @@
     "attribution": "Purulia 2040 contributors"
   },
   "processing": [
-    "Renamed `ward` to `ward_no` and added civic schema properties (id, name, boundary_type, local_body, district, state, country).",
+    "Mapped `ward` to `ward_number` and added the schema/ward.schema.json properties; `ward_name` and `year_delimited` are null (wards are unnamed, delimitation year unknown).",
     "Dropped tracing slivers under 100 m² (one each in wards 10 and 20), so every ward is a single Polygon.",
     "Oriented rings per RFC 7946 (exterior counter-clockwise).",
     "Script: scripts/normalise_purulia_wards.py"
