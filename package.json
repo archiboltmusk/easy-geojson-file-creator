@@ -6,7 +6,10 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"data:validate": "node scripts/validate-data.mjs",
+		"data:fix": "node scripts/validate-data.mjs --fix",
+		"data:test": "node --test scripts/__tests__/*.test.mjs"
 	},
 	"dependencies": {
 		"clsx": "^2.1.1",
@@ -21,10 +24,13 @@
 		"@types/node": "^26.6.3",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
+		"ajv": "^8.20.0",
+		"ajv-formats": "^3.0.1",
 		"eslint": "^10.11.0",
 		"eslint-config-next": "^16.3.6",
 		"postcss": "^8.5.28",
 		"tailwindcss": "^4.3.3",
 		"typescript": "^7.0.2"
-	}
+	},
+	"packageManager": "pnpm@10.33.0"
 }
