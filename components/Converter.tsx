@@ -6,6 +6,7 @@ import { AlertTriangle, Check, Download, FileJson, Loader2, RotateCcw, Upload } 
 import { useRef, useState } from "react"
 import { ACCEPTED_EXTENSIONS, convertFile, outputName, summarize, type ConvertResult } from "@/lib/convert"
 import { CRS_PRESETS } from "@/lib/crs"
+import SchemaMapper from "./SchemaMapper"
 
 const MapPreview = dynamic(() => import("./MapPreview"), { ssr: false, loading: () => <div className="grid h-full min-h-[340px] place-items-center rounded-[22px] border border-[#dce6df] bg-[#edf6f0] text-sm text-[#60786b]">Loading map…</div> })
 
@@ -48,12 +49,12 @@ export default function Converter() {
     if (source) run(source.name, source.data, next)
   }
 
-  function download() {
-    if (!result || !source) return
-    const url = URL.createObjectURL(new Blob([JSON.stringify(result.collection)], { type: "application/geo+json" }))
+  function download(data = result?.collection, name = source ? outputName(source.name) : "") {
+    if (!data || !name) return
+    const url = URL.createObjectURL(new Blob([JSON.stringify(data)], { type: "application/geo+json" }))
     const a = document.createElement("a")
     a.href = url
-    a.download = outputName(source.name)
+    a.download = name
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -71,7 +72,7 @@ export default function Converter() {
   const showCrsPicker = !!result && (result.needsCrs || !!crs)
 
   return (
-    <div className="mt-12 overflow-hidden rounded-[28px] border border-[#dbe3dc] bg-white shadow-[0_18px_60px_rgba(30,66,51,.08)]">
+    <div className="mt-6 overflow-hidden rounded-[28px] border border-[#dbe3dc] bg-white shadow-[0_18px_60px_rgba(30,66,51,.08)]">
       <div className="flex items-center justify-between border-b border-[#e5ebe5] px-5 py-4 sm:px-8">
         <div className="flex items-center gap-3 text-sm font-bold text-[#193a30]"><span className="grid size-7 place-items-center rounded-full bg-[#0d5b4b] text-xs text-white">{step}</span>{step === 1 ? "Drop a map file" : "Check the map, then download"}</div>
         {source && <button onClick={reset} className="flex items-center gap-1.5 text-xs font-bold text-[#60736a] hover:text-[#0d5b4b]"><RotateCcw size={14} />Start over</button>}
@@ -115,7 +116,8 @@ export default function Converter() {
                 <dt>Columns</dt><dd className="break-words">{summary.fields.join(", ") || "None"}</dd>
               </dl>
               {result.warnings.length > 0 && <ul className="mt-3 list-disc space-y-1 pl-5 text-xs text-[#8a4a1f]">{result.warnings.map((w) => <li key={w}>{w}</li>)}</ul>}
-              <button onClick={download} disabled={result.needsCrs} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0d5b4b] px-4 py-3 text-sm font-bold text-white hover:bg-[#0a4b3e] disabled:cursor-not-allowed disabled:bg-[#9fb5ad]"><Download size={16} />Download GeoJSON</button>
+              <button onClick={() => download()} disabled={result.needsCrs} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-[#0d5b4b] px-4 py-3 text-sm font-bold text-white hover:bg-[#0a4b3e] disabled:cursor-not-allowed disabled:bg-[#9fb5ad]"><Download size={16} />Download GeoJSON</button>
+              {!result.needsCrs && summary.fields.length > 0 && <SchemaMapper key={source?.name} collection={result.collection} fields={summary.fields} onDownload={download} />}
             </div>
           )}
         </div>

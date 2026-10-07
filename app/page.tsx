@@ -1,11 +1,13 @@
 "use client"
 
-import { Code2, CircleHelp, Info, Map, ShieldCheck, Sparkles, X } from "lucide-react"
+import { Code2, CircleHelp, FileUp, ImageIcon, Info, Map, ShieldCheck, Sparkles, X } from "lucide-react"
 import { useState } from "react"
 import Converter from "@/components/Converter"
+import TraceWorkbench from "@/components/trace/TraceWorkbench"
 
 export default function Home() {
   const [showGuide, setShowGuide] = useState(false)
+  const [tool, setTool] = useState<"file" | "picture">("file")
 
   return (
     <main className="min-h-screen overflow-hidden">
@@ -20,12 +22,16 @@ export default function Home() {
           <div className="relative hidden min-h-[235px] overflow-hidden rounded-[28px] bg-[#dcebe2] p-6 lg:block"><div className="absolute inset-0 opacity-35" style={{ backgroundImage: "linear-gradient(#aecabb 1px, transparent 1px), linear-gradient(90deg, #aecabb 1px, transparent 1px)", backgroundSize: "34px 34px" }} /><div className="absolute -right-12 top-7 h-48 w-[115%] rotate-[-11deg] rounded-[45%] border-[18px] border-[#8dbca7] opacity-70" /><div className="absolute left-16 top-24 grid size-11 place-items-center rounded-full bg-[#ed8b4d] text-white shadow-lg"><Map size={21} /></div><div className="absolute bottom-12 right-28 grid size-9 place-items-center rounded-full bg-[#d2ad45] text-white shadow-lg"><Map size={17} /></div><div className="absolute bottom-6 left-7 rounded-full bg-white/80 px-3 py-1.5 text-[11px] font-bold text-[#44705f]">Your city, your data</div></div>
         </div>
 
-        <Converter />
+        <div role="tablist" aria-label="What do you have?" className="mt-12 inline-flex rounded-full border border-[#dbe3dc] bg-white p-1 text-sm font-bold shadow-sm">
+          <button role="tab" aria-selected={tool === "file"} onClick={() => setTool("file")} className={`flex items-center gap-2 rounded-full px-4 py-2 ${tool === "file" ? "bg-[#0d5b4b] text-white" : "text-[#60736a] hover:text-[#0d5b4b]"}`}><FileUp size={15} />I have a map file</button>
+          <button role="tab" aria-selected={tool === "picture"} onClick={() => setTool("picture")} className={`flex items-center gap-2 rounded-full px-4 py-2 ${tool === "picture" ? "bg-[#0d5b4b] text-white" : "text-[#60736a] hover:text-[#0d5b4b]"}`}><ImageIcon size={15} />I have a photo or PDF</button>
+        </div>
+        {tool === "file" ? <Converter /> : <TraceWorkbench />}
       </section>
 
       <section className="mx-auto max-w-[1320px] px-6 pb-16 lg:px-10"><div className="grid gap-4 border-t border-[#dce4dd] pt-8 md:grid-cols-3"><div className="flex gap-3"><span className="text-2xl font-bold text-[#d5b84b]">01</span><div><h3 className="font-bold text-[#29483d]">Drop the file you got</h3><p className="mt-1 text-sm leading-5 text-[#7d8982]">Zipped Shapefile, KML/KMZ from Google Earth, or GeoJSON.</p></div></div><div className="flex gap-3"><span className="text-2xl font-bold text-[#e98a4d]">02</span><div><h3 className="font-bold text-[#29483d]">Check it on the map</h3><p className="mt-1 text-sm leading-5 text-[#7d8982]">Shapes are reprojected to WGS 84 and drawn over OpenStreetMap.</p></div></div><div className="flex gap-3"><span className="text-2xl font-bold text-[#5a9d7d]">03</span><div><h3 className="font-bold text-[#29483d]">Download GeoJSON</h3><p className="mt-1 text-sm leading-5 text-[#7d8982]">A clean FeatureCollection, ready to share or publish.</p></div></div></div></section>
 
-      {showGuide && <div className="fixed bottom-5 right-5 z-20 w-[calc(100%-40px)] max-w-[350px] rounded-2xl border border-[#cbded0] bg-white p-5 shadow-xl"><div className="flex items-center justify-between"><strong className="text-[#193a30]">How CivicShape works</strong><button onClick={() => setShowGuide(false)}><X size={16} className="text-[#849189]" /></button></div><p className="mt-2 text-sm leading-6 text-[#6b7871]">CivicShape reads Shapefile, KML/KMZ and GeoJSON files, reprojects them to WGS 84 (picking up the .prj when there is one), and packages the result as a standard GeoJSON FeatureCollection. Your file stays in your browser.</p><div className="mt-3 flex items-center gap-2 text-xs font-bold text-[#0d8062]"><Info size={14} />Nothing is uploaded</div></div>}
+      {showGuide && <div className="fixed bottom-5 right-5 z-20 w-[calc(100%-40px)] max-w-[350px] rounded-2xl border border-[#cbded0] bg-white p-5 shadow-xl"><div className="flex items-center justify-between"><strong className="text-[#193a30]">How CivicShape works</strong><button onClick={() => setShowGuide(false)}><X size={16} className="text-[#849189]" /></button></div><p className="mt-2 text-sm leading-6 text-[#6b7871]">CivicShape reads Shapefile, KML/KMZ and GeoJSON files and reprojects them to WGS 84. For a photo or PDF of a ward map, it outlines the wards and reads their numbers as a first draft you fix by hand, then you pin a few matching spots on the map to place it. Everything stays in your browser.</p><div className="mt-3 flex items-center gap-2 text-xs font-bold text-[#0d8062]"><Info size={14} />Nothing is uploaded</div></div>}
     </main>
   )
 }
